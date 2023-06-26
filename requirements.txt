@@ -1,0 +1,11 @@
+django
+psycopg2-binary==2.9.3
+pydantic
+python-dotenv
+djangorestframework
+celery
+pillow
+PyPDF2
+pydub
+ffmpeg-python
+flower
