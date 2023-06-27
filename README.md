@@ -8,7 +8,7 @@ The API handles type files:
 * `.wav` and `.mp3`
 * `.jpeg` and `.png`
 
-
+You can find samples of each file type in the `samples` folder.
 
 ## Setup
 
@@ -34,7 +34,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. Set the `.env`-file
+#### 3. Set the `.env`-file
 
 Before the API deployment, you need to create an environment file `.env` with the following fields, 
 as shown below. Place this file in the root directory of the repository.
@@ -89,7 +89,7 @@ This implementation uses PostgreSQL, but you can use any other
 compatible database, including SQLite.
 
 
-#### Docker
+### Docker
 
 The Docker is the easiest way to deploy the API. It will only take one command:
 
@@ -119,16 +119,8 @@ python3 manage.py test files.tests.unit
 
 ### API instruction
 
+
 You can try out the API in different ways:
-
-#### Postman App
-
-
-![img_1.png](images/img_1.png)
-
-![img_2.png](images/img_2.png)
-
-![img_3.png](images/img_3.png)
 
 
 #### `requests` library
@@ -140,6 +132,16 @@ You can try out the API in different ways:
 >>> response.json()
 {'id': 6, 'file': 'http://127.0.0.1/media/files/test_file.jpeg', 'processed': False, 'uploaded_at': '2023-06-27T04:10:52.261877+03:00'}
 ```
+
+
+#### Postman App
+
+
+![img_1.png](images/img_1.png)
+
+![img_2.png](images/img_2.png)
+
+![img_3.png](images/img_3.png)
 
 
 
