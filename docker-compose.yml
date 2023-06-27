@@ -1,0 +1,58 @@
+services:
+
+  db:
+    image: postgres:15
+    restart: always
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    env_file:
+      - ./.env
+
+  rabbitmq3:
+    container_name: "rabbitmq"
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+
+  web:
+    platform: linux/amd64
+    build: .
+    command: ["./wait-for-it.sh", "db:5432", "--",
+              "bash", "./scripts/run_server.sh"]
+    restart: always
+    volumes:
+      - "./wait-for-it.sh:/wait-for-it.sh:ro"
+      - ./file_process/media/:/code/file_process/media/
+      - ./file_process/:/code/file_process/
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+
+  celery:
+    platform: linux/amd64
+    restart: always
+    build:
+      context: .
+    working_dir:
+      /code/file_process/
+    command: celery -A file_process worker -l info
+    volumes:
+      - ./file_process/media/:/code/file_process/media/
+    env_file:
+      - ./.env
+    depends_on:
+      - web
+      - rabbitmq3
+
+  nginx:
+    image: nginx:1.23.1
+    restart: always
+    volumes:
+      - ./config/nginx:/etc/nginx/templates
+      - .:/code
+    ports:
+      - "80:80"

@@ -3,3 +3,6 @@ venv
 .env
 .DS_Store
 __pycache__
+media/files
+./data
+uwsgi_app.sock
